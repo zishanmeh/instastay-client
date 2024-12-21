@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleSIgnIn from "../shared/GoogleSIgnIn";
 import Swal from "sweetalert2";
 import { useContext } from "react";
@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const { signInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,7 +25,15 @@ const Login = () => {
     }
 
     signInUser(email, password)
-      .then((result) => console.log(result.user))
+      .then((result) => {
+        const user = result.user;
+        Swal.fire({
+          title: `welcome back ${user.displayName}`,
+          icon: "success",
+          draggable: false,
+        });
+        navigate(location?.state ? location.state : "/");
+      })
       .catch((err) => toast.error(err.message));
   };
   return (

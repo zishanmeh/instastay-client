@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleSIgnIn from "../shared/GoogleSIgnIn";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 const Register = () => {
   const { createNewUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -28,9 +29,15 @@ const Register = () => {
 
     createNewUser(email, password)
       .then((result) => {
-        console.log(result.user);
         updateUserProfile({ displayName: name, photoURL: photo })
-          .then((result) => console.log(result))
+          .then((res) => {
+            Swal.fire({
+              title: `Registration successfull`,
+              icon: "success",
+              draggable: false,
+            });
+            navigate("/");
+          })
           .catch((err) => toast.error(err.message));
       })
       .catch((err) => {
