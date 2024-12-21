@@ -1,9 +1,17 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa6";
-import { FaRegDotCircle } from "react-icons/fa";
+import { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
+import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const RoomDetails = () => {
   const room = useLoaderData();
+  const [startDate, setStartDate] = useState(new Date());
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     _id,
     type,
@@ -16,6 +24,35 @@ const RoomDetails = () => {
     price,
     availability,
   } = room;
+
+  const handleBooking = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You need to login first for booking",
+      });
+
+      document.getElementById("closeBookingModal").click();
+      navigate("/login");
+      return;
+    }
+    const formattedDate = format(startDate, "dd/MM/yyyy");
+    const bookingSummary = {
+      id: _id,
+      booking_day: formattedDate,
+      type,
+      capacity,
+      size,
+      view,
+      description,
+      image,
+      facilities,
+      price,
+      availability,
+    };
+    console.log(bookingSummary);
+  };
 
   return (
     <div className="my-10">
@@ -79,9 +116,23 @@ const RoomDetails = () => {
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-5">Booking summary</h3>
-          <div className="">
+          <div className="w-fit mx-auto">
             <div>
               <img src={image} alt={type} />
+            </div>
+
+            <div className="flex justify-center mt-5 w-fit mx-auto items-center gap-2">
+              <div>
+                <p>Select your date: </p>
+              </div>
+              <div className=" border w-fit border-neutral mx-auto px-4 py-2 rounded-full">
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  minDate={new Date()}
+                  dateFormat="dd/MM/yy"
+                />
+              </div>
             </div>
             <ul className="text-left w-fit mx-auto flex flex-col gap-2 mt-5">
               <li>Total: ${price}</li>
@@ -90,14 +141,19 @@ const RoomDetails = () => {
               <li>Size: {size}</li>
               <li>View: {view}</li>
             </ul>
-            <button className="btn btn-neutral btn-outline mt-4">
+            <button
+              className="btn btn-neutral btn-outline mt-4"
+              onClick={handleBooking}
+            >
               Confirm
             </button>
           </div>
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn" id="closeBookingModal">
+                Close
+              </button>
             </form>
           </div>
         </div>
