@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const RoomDetails = () => {
   const room = useLoaderData();
@@ -26,6 +27,7 @@ const RoomDetails = () => {
   } = room;
 
   const handleBooking = () => {
+    document.getElementById("closeBookingModal").click();
     if (!user) {
       Swal.fire({
         icon: "error",
@@ -33,8 +35,15 @@ const RoomDetails = () => {
         text: "You need to login first for booking",
       });
 
-      document.getElementById("closeBookingModal").click();
       navigate("/login");
+      return;
+    }
+    if (!availability) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Room is not available",
+      });
       return;
     }
     const formattedDate = format(startDate, "dd/MM/yyyy");
@@ -50,8 +59,24 @@ const RoomDetails = () => {
       facilities,
       price,
       availability,
+      userName: user?.displayName,
+      userEmail: user?.email,
     };
-    console.log(bookingSummary);
+    axios
+      .post("http://localhost:3000/room/booking", bookingSummary)
+      .then((data) => {
+        axios
+          .patch(`http://localhost:3000/update-availability-false/${_id}`)
+          .then((res) => {
+            if (data.data.insertedId) {
+              Swal.fire({
+                title: "Booking successfull",
+                icon: "success",
+                draggable: false,
+              });
+            }
+          });
+      });
   };
 
   return (
