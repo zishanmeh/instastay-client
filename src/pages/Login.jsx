@@ -1,7 +1,31 @@
 import { Link } from "react-router-dom";
 import GoogleSIgnIn from "../shared/GoogleSIgnIn";
+import Swal from "sweetalert2";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const { signInUser } = useContext(AuthContext);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Password error",
+        text: "Password must me at least 6 characters, 1 uppercase and 1 lowercase",
+      });
+      return;
+    }
+
+    signInUser(email, password)
+      .then((result) => console.log(result.user))
+      .catch((err) => toast.error(err.message));
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,7 +38,7 @@ const Login = () => {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleLogin}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -49,7 +73,10 @@ const Login = () => {
             </div>
             <div>
               <p>
-                Already have an account? <Link to="/login">Login now!</Link>
+                Don't have an account?{" "}
+                <Link to="/register" className="hover:link">
+                  Register now!
+                </Link>
               </p>
             </div>
           </form>
