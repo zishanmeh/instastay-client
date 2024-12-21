@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Rooms from "../pages/Rooms";
+import RoomDetails from "../pages/RoomDetails";
 
 const Router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const Router = createBrowserRouter([
         path: "/rooms",
         element: <Rooms></Rooms>,
         loader: () => fetch("http://localhost:3000/"),
+      },
+      {
+        path: "/room/:id",
+        element: <RoomDetails></RoomDetails>,
       },
     ],
   },
