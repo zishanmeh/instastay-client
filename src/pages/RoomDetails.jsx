@@ -74,6 +74,7 @@ const RoomDetails = () => {
                 icon: "success",
                 draggable: false,
               });
+              navigate(`/room/${_id}`);
             }
           });
       });
