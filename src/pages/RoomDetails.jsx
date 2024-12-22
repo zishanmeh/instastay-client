@@ -8,6 +8,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
+import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import Rating from "react-rating-stars-component";
 
 const RoomDetails = () => {
   const room = useLoaderData();
@@ -17,11 +19,21 @@ const RoomDetails = () => {
       .get(`http://localhost:3000/room-bookings?email=${user?.email}`)
       .then((res) => setBookings(res.data));
   }, [user?.email]);
+
   const [startDate, setStartDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
   const [rating, setRating] = useState(5);
   const [feedback, setFeedback] = useState("");
-
+  const [review, setReview] = useState([]);
+  // load review
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/all-reviews?id=${room._id}`)
+      .then((res) => {
+        setReview(res.data);
+      });
+  }, []);
+  console.log(review);
   const navigate = useNavigate();
   const {
     _id,
@@ -99,6 +111,7 @@ const RoomDetails = () => {
   const changeFeedback = (e) => {
     setFeedback(e.target.value);
   };
+  console.log(user);
   // submitting review
   const handleSubmitReview = () => {
     console.log(rating);
@@ -115,6 +128,9 @@ const RoomDetails = () => {
     const newReview = {
       rating,
       feedback,
+      userName: user.displayName,
+      roomId: room._id,
+      image: user.photoURL,
     };
     axios.post("http://localhost:3000/review", newReview).then((res) => {
       if (res.status === 200) {
@@ -204,7 +220,43 @@ const RoomDetails = () => {
         </button>
       </div>
       <div>
-        <h1 className="text-3xl font-bold">There is no Review available</h1>
+        {/* <h1 className="text-3xl font-bold">There is no Review available</h1>
+         */}
+        <h1 className="text-4xl text-center font-bold mb-10">All reviews</h1>
+        {review.length < 1 ? (
+          <h1 className="text-3xl font-bold">There is no Review available</h1>
+        ) : (
+          review.map((rev) => (
+            <div
+              key={rev._id}
+              className="max-w-lg mx-auto bg-base-300 px-5 py-8 rounded-md shadow-md mb-5"
+            >
+              <div className="avatar">
+                <div className="w-20 rounded-full">
+                  <img src={rev?.image} />
+                </div>
+              </div>
+              <h1 className="text-sm text-gray-600">{rev?.userName}</h1>
+              <div className="w-fit text-center mx-auto">
+                <Rating
+                  count={rev.rating} // Total stars
+                  value={rev.rating} // Current rating value (e.g., 4)
+                  size={24} // Size of stars
+                  edit={false} // Disable editing
+                  activeColor="#ffd700" // Yellow color for active stars
+                  color="#d3d3d3" // Gray color for inactive stars
+                />
+              </div>
+              <div className="text-center">
+                <p className="w-fit mx-auto flex text-gray-800">
+                  <FaQuoteLeft className="mr-2"></FaQuoteLeft>
+                  {rev?.feedback}
+                  <FaQuoteRight className="ml-2"></FaQuoteRight>
+                </p>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Modal for booking */}
@@ -268,6 +320,17 @@ const RoomDetails = () => {
               name="rating"
             />
           </div>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Username</span>
+            </div>
+            <input
+              type="text"
+              value={user?.displayName}
+              disabled
+              className="input input-bordered w-full"
+            />
+          </label>
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">Write your feedback here</span>
