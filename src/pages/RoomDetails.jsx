@@ -1,16 +1,25 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { FaBed } from "react-icons/fa6";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
+import StarRatings from "react-star-ratings";
 
 const RoomDetails = () => {
   const room = useLoaderData();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/room-bookings?email=${user?.email}`)
+      .then((res) => setBookings(res.data));
+  }, []);
   const [startDate, setStartDate] = useState(new Date());
+  const [bookings, setBookings] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
@@ -80,6 +89,35 @@ const RoomDetails = () => {
       });
   };
 
+  // Rating
+
+  const changeRating = (newRating) => {
+    setRating(newRating);
+  };
+
+  const changeFeedback = (e) => {
+    setFeedback(e.target.value);
+  };
+  // submitting review
+  const handleSubmitReview = () => {
+    console.log(rating);
+    console.log(feedback);
+  };
+
+  const handleOpenModal = () => {
+    for (const book of bookings) {
+      if (book.id === room._id) {
+        document.getElementById("reviewModal").showModal();
+        return;
+      }
+    }
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "You didn't book this room",
+    });
+  };
+
   return (
     <div className="my-10">
       <h1 className="text-center text-4xl font-bold">{type}</h1>
@@ -132,9 +170,16 @@ const RoomDetails = () => {
       </div>
       {/* Review */}
       <div>
-        <button className="btn text-center btn-neutral btn-outline my-5">
+        <button
+          className="btn text-center btn-neutral btn-outline my-5"
+          // onClick={() => document.getElementById("reviewModal").showModal()}
+          onClick={handleOpenModal}
+        >
           Review Now
         </button>
+      </div>
+      <div>
+        <h1 className="text-3xl font-bold">There is no Review available</h1>
       </div>
 
       {/* Modal for booking */}
@@ -180,6 +225,45 @@ const RoomDetails = () => {
               <button className="btn" id="closeBookingModal">
                 Close
               </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      {/* Modal for take reviews*/}
+      <dialog id="reviewModal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <div>
+            <h1>Leave a Review</h1>
+            <StarRatings
+              rating={rating}
+              starRatedColor="gold"
+              changeRating={changeRating}
+              numberOfStars={5}
+              name="rating"
+            />
+          </div>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Write your feedback here</span>
+            </div>
+            <textarea
+              onChange={changeFeedback}
+              className="input input-bordered w-full"
+            ></textarea>
+          </label>
+          <div>
+            <button
+              className="btn btn-neutral mt-4"
+              onClick={handleSubmitReview}
+            >
+              Submit
+            </button>
+          </div>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
             </form>
           </div>
         </div>
