@@ -11,16 +11,17 @@ import StarRatings from "react-star-ratings";
 
 const RoomDetails = () => {
   const room = useLoaderData();
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     axios
       .get(`http://localhost:3000/room-bookings?email=${user?.email}`)
       .then((res) => setBookings(res.data));
-  }, []);
+  }, [user?.email]);
   const [startDate, setStartDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
   const [feedback, setFeedback] = useState("");
-  const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const {
     _id,
@@ -102,6 +103,30 @@ const RoomDetails = () => {
   const handleSubmitReview = () => {
     console.log(rating);
     console.log(feedback);
+    document.getElementById("reviewModalClose").click();
+    if (feedback.length < 1) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Write at least 1 character",
+      });
+      return;
+    }
+    const newReview = {
+      rating,
+      feedback,
+    };
+    axios.post("http://localhost:3000/review", newReview).then((res) => {
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Thanks for your review",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   const handleOpenModal = () => {
@@ -263,7 +288,9 @@ const RoomDetails = () => {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
+              <button className="btn" id="reviewModalClose">
+                Close
+              </button>
             </form>
           </div>
         </div>
