@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import Banner from "../shared/Banner";
+import Map from "../shared/MyMap";
 
 const Home = () => {
   return (
@@ -10,6 +11,10 @@ const Home = () => {
       </Helmet>
       <div>
         <Banner></Banner>
+      </div>
+      <div className="my-14">
+        <h1 className="text-center text-3xl font-bold">Visit our place</h1>
+        <Map></Map>
       </div>
     </div>
   );
