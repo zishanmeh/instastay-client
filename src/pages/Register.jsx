@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import registerAnim from "../assets/signupAnim.json";
+import Lottie from "lottie-react";
 
 const Register = () => {
   const { createNewUser, updateUserProfile } = useContext(AuthContext);
@@ -47,15 +49,16 @@ const Register = () => {
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
+        {/* <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-        </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        </div> */}
+        <Lottie className="" animationData={registerAnim}></Lottie>
+        <div className="card bg-base-100 w-full shadow-2xl">
           <form className="card-body" onSubmit={handleRegister}>
             <div className="form-control">
               <label className="label">

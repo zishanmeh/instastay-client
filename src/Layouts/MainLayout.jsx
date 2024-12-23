@@ -8,10 +8,10 @@ const MainLayout = () => {
       <div>
         <Navbar></Navbar>
       </div>
-      <div>
+      <div className="my-10">
         <Outlet></Outlet>
       </div>
-      <div>
+      <div className="">
         <Footer></Footer>
       </div>
     </div>

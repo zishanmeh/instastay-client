@@ -10,6 +10,8 @@ import axios from "axios";
 import StarRatings from "react-star-ratings";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Rating from "react-rating-stars-component";
+import { MdOutlineStreetview } from "react-icons/md";
+import { IoIosResize } from "react-icons/io";
 
 const RoomDetails = () => {
   const room = useLoaderData();
@@ -111,11 +113,8 @@ const RoomDetails = () => {
   const changeFeedback = (e) => {
     setFeedback(e.target.value);
   };
-  console.log(user);
   // submitting review
   const handleSubmitReview = () => {
-    console.log(rating);
-    console.log(feedback);
     document.getElementById("reviewModalClose").click();
     if (feedback.length < 1) {
       Swal.fire({
@@ -134,6 +133,7 @@ const RoomDetails = () => {
     };
     axios.post("http://localhost:3000/review", newReview).then((res) => {
       if (res.status === 200) {
+        setReview((prevReviews) => [newReview, ...prevReviews]);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -146,6 +146,14 @@ const RoomDetails = () => {
   };
 
   const handleOpenModal = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You have to login first",
+      });
+      return;
+    }
     for (const book of bookings) {
       if (book.id === room._id) {
         document.getElementById("reviewModal").showModal();
@@ -164,13 +172,14 @@ const RoomDetails = () => {
       <h1 className="text-center text-4xl font-bold">{type}</h1>
       <div className="flex justify-center items-center gap-4 my-4">
         <p className="w-fit flex items-center justify-center gap-2">
-          <FaBed color="#333"></FaBed> {capacity} Persons
+          <FaBed color="#333" size={20}></FaBed> {capacity} Persons
         </p>
         <p className="w-fit flex items-center justify-center gap-2">
-          <FaBed color="#333"></FaBed> {view} Persons
+          <MdOutlineStreetview color="#333" size={20}></MdOutlineStreetview>{" "}
+          {view} view
         </p>
         <p className="w-fit flex items-center justify-center gap-2">
-          <FaBed color="#333"></FaBed> {size} Persons
+          <IoIosResize color="#333" size={20}></IoIosResize> {size}
         </p>
       </div>
       <div className="w-full relative">

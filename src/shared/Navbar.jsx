@@ -50,7 +50,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">InstaStay</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
@@ -58,7 +58,11 @@ const Navbar = () => {
       <div className="navbar-end flex items-center gap-2">
         {user ? (
           <>
-            <p>{user?.displayName}</p>
+            <img
+              className="w-16 rounded-full"
+              src={user?.photoURL}
+              alt={user?.displayName}
+            />
             <button className="btn btn-neutral" onClick={logOut}>
               Logout
             </button>
