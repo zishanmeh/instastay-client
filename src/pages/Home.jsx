@@ -5,6 +5,7 @@ import TopRooms from "../shared/TopRooms";
 import Facilities from "../shared/Facilities";
 import HomeAbout from "../shared/HomeAbout";
 import Promotional from "../shared/Promotional";
+import ReviewsSlider from "../shared/ReviewsSlider";
 
 const Home = () => {
   return (
@@ -23,6 +24,9 @@ const Home = () => {
       </div>
       <div className="mb-14">
         <TopRooms></TopRooms>
+      </div>
+      <div className="mb-14">
+        <ReviewsSlider></ReviewsSlider>
       </div>
       <div>
         <Facilities></Facilities>
