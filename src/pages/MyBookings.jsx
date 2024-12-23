@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
+import moment from "moment";
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+
   const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -57,7 +59,23 @@ const MyBookings = () => {
       });
   };
 
-  const handleCancel = (id, id2) => {
+  const handleCancel = (id, id2, booking_day) => {
+    const bookingDate = booking_day;
+    const currentDate = moment();
+    const parsedBookingDate = moment(bookingDate, "DD/MM/YYYY").startOf("day");
+    const parsedCurrentDate = currentDate.startOf("day");
+    const canCancel = parsedCurrentDate.isBefore(
+      parsedBookingDate.clone().subtract(1, "day")
+    );
+    if (!canCancel) {
+      Swal.fire({
+        icon: "error",
+        title: "Cannot cancel",
+        text: "Booking date is too close or already passed.",
+      });
+      return;
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -153,7 +171,9 @@ const MyBookings = () => {
                     <th>
                       <button
                         className="btn btn-error btn-xs"
-                        onClick={() => handleCancel(room._id, room.id)}
+                        onClick={() =>
+                          handleCancel(room._id, room.id, room.booking_day)
+                        }
                       >
                         Cancel
                       </button>
