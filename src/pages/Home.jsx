@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Banner from "../shared/Banner";
 import Map from "../shared/MyMap";
+import TopRooms from "../shared/TopRooms";
 
 const Home = () => {
   return (
@@ -15,6 +16,9 @@ const Home = () => {
       <div className="my-14">
         <h1 className="text-center text-3xl font-bold">Visit our place</h1>
         <Map></Map>
+      </div>
+      <div className="mb-14">
+        <TopRooms></TopRooms>
       </div>
     </div>
   );
