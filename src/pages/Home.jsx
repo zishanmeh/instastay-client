@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import Banner from "../shared/Banner";
 import Map from "../shared/MyMap";
 import TopRooms from "../shared/TopRooms";
+import Facilities from "../shared/Facilities";
 
 const Home = () => {
   return (
@@ -19,6 +20,9 @@ const Home = () => {
       </div>
       <div className="mb-14">
         <TopRooms></TopRooms>
+      </div>
+      <div>
+        <Facilities></Facilities>
       </div>
     </div>
   );
