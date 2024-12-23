@@ -3,6 +3,7 @@ import Banner from "../shared/Banner";
 import Map from "../shared/MyMap";
 import TopRooms from "../shared/TopRooms";
 import Facilities from "../shared/Facilities";
+import HomeAbout from "../shared/HomeAbout";
 
 const Home = () => {
   return (
@@ -23,6 +24,9 @@ const Home = () => {
       </div>
       <div>
         <Facilities></Facilities>
+      </div>
+      <div>
+        <HomeAbout></HomeAbout>
       </div>
     </div>
   );
