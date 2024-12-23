@@ -224,9 +224,9 @@ const RoomDetails = () => {
         </div>
       </div>
       {/* Review */}
-      <div>
+      <div className="flex flex-col justify-center">
         <button
-          className="btn text-center btn-neutral btn-outline my-5"
+          className="btn text-center btn-neutral btn-outline my-5 w-fit mx-auto"
           // onClick={() => document.getElementById("reviewModal").showModal()}
           onClick={handleOpenModal}
         >
@@ -238,19 +238,23 @@ const RoomDetails = () => {
          */}
         <h1 className="text-4xl text-center font-bold mb-10">All reviews</h1>
         {review.length < 1 ? (
-          <h1 className="text-3xl font-bold">There is no Review available</h1>
+          <h1 className="text-3xl font-bold text-center">
+            There is no Review available
+          </h1>
         ) : (
           review.map((rev) => (
             <div
               key={rev._id}
               className="max-w-lg mx-auto bg-base-300 px-5 py-8 rounded-md shadow-md mb-5"
             >
-              <div className="avatar">
-                <div className="w-20 rounded-full">
+              <div className="avatar flex flex-col justify-center">
+                <div className="w-20 rounded-full mx-auto">
                   <img src={rev?.image} />
                 </div>
               </div>
-              <h1 className="text-sm text-gray-600">{rev?.userName}</h1>
+              <h1 className="text-sm text-gray-600 text-center">
+                {rev?.userName}
+              </h1>
               <div className="w-fit text-center mx-auto">
                 <Rating
                   count={rev.rating} // Total stars

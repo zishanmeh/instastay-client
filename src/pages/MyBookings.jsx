@@ -101,7 +101,7 @@ const MyBookings = () => {
         <title>My Bookings</title>
       </Helmet>
 
-      <div>
+      <div className="w-fit mx-auto">
         <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
@@ -110,7 +110,7 @@ const MyBookings = () => {
                 <th>Type</th>
                 <th>Details</th>
                 <th>Update</th>
-                <th></th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
