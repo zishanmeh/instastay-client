@@ -12,6 +12,7 @@ import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Rating from "react-rating-stars-component";
 import { MdOutlineStreetview } from "react-icons/md";
 import { IoIosResize } from "react-icons/io";
+import { Helmet } from "react-helmet";
 
 const RoomDetails = () => {
   const room = useLoaderData();
@@ -169,6 +170,10 @@ const RoomDetails = () => {
 
   return (
     <div className="my-10">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{room?.type}</title>
+      </Helmet>
       <h1 className="text-center text-4xl font-bold">{type}</h1>
       <div className="flex justify-center items-center gap-4 my-4">
         <p className="w-fit flex items-center justify-center gap-2">

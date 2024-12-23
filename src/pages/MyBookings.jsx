@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { Helmet } from "react-helmet";
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
@@ -95,7 +96,10 @@ const MyBookings = () => {
   };
   return (
     <div>
-      <h1>This is my booking {bookings.length}</h1>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>My Bookings</title>
+      </Helmet>
 
       <div>
         <div className="overflow-x-auto">

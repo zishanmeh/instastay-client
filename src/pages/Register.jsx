@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import registerAnim from "../assets/signupAnim.json";
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const { createNewUser, updateUserProfile } = useContext(AuthContext);
@@ -48,6 +49,10 @@ const Register = () => {
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Register</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse">
         {/* <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>

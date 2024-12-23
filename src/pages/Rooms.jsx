@@ -1,9 +1,14 @@
+import { Helmet } from "react-helmet";
 import { Link, useLoaderData } from "react-router-dom";
 
 const Rooms = () => {
   const rooms = useLoaderData();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between items-stretch gap-5">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>All rooms</title>
+      </Helmet>
       {rooms.map((room) => (
         <Link
           className="card bg-base-100 shadow-xl cursor-pointer hover:scale-105 duration-700"

@@ -6,6 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import loginLottie from "../assets/loginAnim.json";
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { signInUser } = useContext(AuthContext);
@@ -40,6 +41,10 @@ const Login = () => {
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Login</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse gap-10 justify-center">
         {/* <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
