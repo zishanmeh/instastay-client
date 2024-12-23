@@ -4,6 +4,7 @@ import Map from "../shared/MyMap";
 import TopRooms from "../shared/TopRooms";
 import Facilities from "../shared/Facilities";
 import HomeAbout from "../shared/HomeAbout";
+import Promotional from "../shared/Promotional";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         <meta charSet="utf-8" />
         <title>Home- InstaStay</title>
       </Helmet>
+      <Promotional></Promotional>
       <div>
         <Banner></Banner>
       </div>
