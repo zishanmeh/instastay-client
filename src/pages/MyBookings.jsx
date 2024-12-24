@@ -17,7 +17,9 @@ const MyBookings = () => {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/room-bookings?email=${user?.email}`)
+      .get(`http://localhost:3000/room-bookings?email=${user?.email}`, {
+        withCredentials: true,
+      })
       .then((res) => setBookings(res.data));
   }, []);
 
@@ -134,7 +136,9 @@ const MyBookings = () => {
             <tbody>
               {/* row 1 */}
               {bookings.length < 1 ? (
-                <h1>No Booking Available</h1>
+                <h1 className="text-4xl font-bold text-center">
+                  No Booking Available
+                </h1>
               ) : (
                 bookings.map((room) => (
                   <tr key={room._id}>
