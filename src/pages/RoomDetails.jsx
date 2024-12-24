@@ -13,21 +13,30 @@ import Rating from "react-rating-stars-component";
 import { MdOutlineStreetview } from "react-icons/md";
 import { IoIosResize } from "react-icons/io";
 import { Helmet } from "react-helmet";
+import noDataAnim from "../assets/noDataAnim.json";
+import Lottie from "lottie-react";
 
 const RoomDetails = () => {
   const room = useLoaderData();
   const { user } = useContext(AuthContext);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/room-bookings?email=${user?.email}`)
-      .then((res) => setBookings(res.data));
-  }, [user?.email]);
-
   const [startDate, setStartDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
   const [rating, setRating] = useState(5);
   const [feedback, setFeedback] = useState("");
   const [review, setReview] = useState([]);
+  console.log(room._id);
+  console.log(bookings);
+  useEffect(() => {
+    if (user?.email) {
+      axios
+        .get(`http://localhost:3000/room-bookings?email=${user.email}`, {
+          withCredentials: true,
+        })
+        .then((res) => setBookings(res.data))
+        .catch((error) => console.error(error));
+    }
+  }, [user]);
+
   // load review
   useEffect(() => {
     axios
@@ -36,7 +45,6 @@ const RoomDetails = () => {
         setReview(res.data);
       });
   }, []);
-  console.log(review);
   const navigate = useNavigate();
   const {
     _id,
@@ -94,6 +102,7 @@ const RoomDetails = () => {
           .patch(`http://localhost:3000/update-availability-false/${_id}`)
           .then((res) => {
             if (data.data.insertedId) {
+              setBookings((prevBookings) => [...prevBookings, bookingSummary]);
               Swal.fire({
                 title: "Booking successfull",
                 icon: "success",
@@ -238,9 +247,10 @@ const RoomDetails = () => {
          */}
         <h1 className="text-4xl text-center font-bold mb-10">All reviews</h1>
         {review.length < 1 ? (
-          <h1 className="text-3xl font-bold text-center">
-            There is no Review available
-          </h1>
+          <Lottie
+            className="max-w-xs mx-auto"
+            animationData={noDataAnim}
+          ></Lottie>
         ) : (
           review.map((rev) => (
             <div
@@ -307,12 +317,14 @@ const RoomDetails = () => {
               <li>Size: {size}</li>
               <li>View: {view}</li>
             </ul>
-            <button
-              className="btn btn-neutral btn-outline mt-4"
-              onClick={handleBooking}
-            >
-              Confirm
-            </button>
+            <div className="flex justify-centers">
+              <button
+                className="btn btn-neutral btn-outline mt-4 w-fit mx-auto"
+                onClick={handleBooking}
+              >
+                Confirm
+              </button>
+            </div>
           </div>
           <div className="modal-action">
             <form method="dialog">

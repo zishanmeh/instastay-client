@@ -48,7 +48,7 @@ const Register = () => {
       });
   };
   return (
-    <div className="hero bg-base-200 min-h-screen">
+    <div className="hero min-h-screen">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Register</title>
@@ -63,7 +63,7 @@ const Register = () => {
           </p>
         </div> */}
         <Lottie className="" animationData={registerAnim}></Lottie>
-        <div className="card bg-base-100 w-full shadow-2xl">
+        <div className="card bg-base-100 w-full shadow-2xl pb-5">
           <form className="card-body" onSubmit={handleRegister}>
             <div className="form-control">
               <label className="label">
@@ -119,15 +119,18 @@ const Register = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button className="btn btn-neutral">Register</button>
             </div>
             <div>
               <p>
-                Already have an account? <Link to="/login">Login now!</Link>
+                Already have an account?{" "}
+                <Link to="/login" className="hover:link">
+                  Login now!
+                </Link>
               </p>
             </div>
           </form>
-          <p className="mb-3">Or</p>
+          <p className="mb-3 text-center">Or</p>
           <GoogleSIgnIn></GoogleSIgnIn>
         </div>
       </div>

@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBvr3p00gcI8XbqWZx-AJbKxxkEtZx3z4M",
-  authDomain: "instastay-ba699.firebaseapp.com",
-  projectId: "instastay-ba699",
-  storageBucket: "instastay-ba699.firebasestorage.app",
-  messagingSenderId: "489590260949",
-  appId: "1:489590260949:web:64ec16dab3b6575b624e5c",
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase

@@ -40,7 +40,7 @@ const Login = () => {
       .catch((err) => toast.error(err.message));
   };
   return (
-    <div className="hero bg-base-200 min-h-screen">
+    <div className="hero min-h-screen">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Login</title>
@@ -55,7 +55,7 @@ const Login = () => {
           </p>
         </div> */}
         <Lottie animationData={loginLottie}></Lottie>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl py-5">
           <form className="card-body" onSubmit={handleLogin}>
             <div className="form-control">
               <label className="label">
@@ -87,7 +87,7 @@ const Login = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-neutral">Login</button>
             </div>
             <div>
               <p>
@@ -98,7 +98,7 @@ const Login = () => {
               </p>
             </div>
           </form>
-          <p className="mb-3">Or</p>
+          <p className="mb-3 text-center">Or</p>
           <GoogleSIgnIn></GoogleSIgnIn>
         </div>
       </div>

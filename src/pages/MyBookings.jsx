@@ -7,6 +7,8 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
 import moment from "moment";
+import noDataAnim from "../assets/noDataAnim.json";
+import Lottie from "lottie-react";
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
@@ -122,72 +124,79 @@ const MyBookings = () => {
       </Helmet>
 
       <div className="w-fit mx-auto">
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {bookings.length < 1 ? (
-                <h1 className="text-4xl font-bold text-center">
-                  No Booking Available
-                </h1>
-              ) : (
-                bookings.map((room) => (
-                  <tr key={room._id}>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img src={room.image} alt={room.type} />
+        {bookings.length < 1 ? (
+          // <h1 className="text-4xl font-bold text-center">
+          //   No bookings available
+          // </h1>
+          <Lottie className="max-w-xs" animationData={noDataAnim}></Lottie>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Details</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {bookings.length < 1 ? (
+                  <h1 className="text-4xl font-bold text-center">
+                    No Booking Available
+                  </h1>
+                ) : (
+                  bookings.map((room) => (
+                    <tr key={room._id}>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle h-12 w-12">
+                              <img src={room.image} alt={room.type} />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">{room.type}</div>
+                            <div className="text-sm opacity-50">
+                              {room.capacity} persons
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="font-bold">{room.type}</div>
-                          <div className="text-sm opacity-50">
-                            {room.capacity} persons
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      Booking day :{room?.booking_day}
-                      <br />
-                      <span className="badge badge-ghost badge-sm">
-                        Price: {room.price}$
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-neutral btn-xs"
-                        onClick={() => openModal(room._id)}
-                      >
-                        Update Date
-                      </button>
-                    </td>
-                    <th>
-                      <button
-                        className="btn btn-error btn-xs"
-                        onClick={() =>
-                          handleCancel(room._id, room.id, room.booking_day)
-                        }
-                      >
-                        Cancel
-                      </button>
-                    </th>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                      <td>
+                        Booking day :{room?.booking_day}
+                        <br />
+                        <span className="badge badge-ghost badge-sm">
+                          Price: {room.price}$
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-neutral btn-xs"
+                          onClick={() => openModal(room._id)}
+                        >
+                          Update Date
+                        </button>
+                      </td>
+                      <th>
+                        <button
+                          className="btn btn-error btn-xs"
+                          onClick={() =>
+                            handleCancel(room._id, room.id, room.booking_day)
+                          }
+                        >
+                          Cancel
+                        </button>
+                      </th>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       {/* <button className="btn" onClick={()=>document.getElementById('update_booking_modal').showModal()}>open modal</button> */}
