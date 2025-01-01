@@ -19,9 +19,12 @@ const MyBookings = () => {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/room-bookings?email=${user?.email}`, {
-        withCredentials: true,
-      })
+      .get(
+        `https://insta-stay-server.vercel.app/room-bookings?email=${user?.email}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => setBookings(res.data));
   }, []);
 
@@ -39,9 +42,12 @@ const MyBookings = () => {
     );
 
     axios
-      .patch(`http://localhost:3000/update-booking-date/${selectedBookingId}`, {
-        booking_day: formattedDate,
-      })
+      .patch(
+        `https://insta-stay-server.vercel.app/update-booking-date/${selectedBookingId}`,
+        {
+          booking_day: formattedDate,
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           Swal.fire({
@@ -91,7 +97,7 @@ const MyBookings = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete/booking/${id}`)
+          .delete(`https://insta-stay-server.vercel.app/delete/booking/${id}`)
           .then((res) => {
             if (res.status === 200) {
               Swal.fire({
@@ -103,7 +109,9 @@ const MyBookings = () => {
                 prevBookings.filter((room) => room._id !== id)
               );
               axios
-                .patch(`http://localhost:3000/update-availability-true/${id2}`)
+                .patch(
+                  `https://insta-stay-server.vercel.app/update-availability-true/${id2}`
+                )
                 .then((res2) => console.log(res2.data));
             }
           });

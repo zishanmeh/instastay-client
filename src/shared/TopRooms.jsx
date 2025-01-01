@@ -7,7 +7,7 @@ const TopRooms = () => {
   const [topRooms, setTopROoms] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/latestRoom")
+      .get("https://insta-stay-server.vercel.app/latestRoom")
       .then((res) => setTopROoms(res.data));
   }, []);
   return (

@@ -29,9 +29,12 @@ const RoomDetails = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:3000/room-bookings?email=${user.email}`, {
-          withCredentials: true,
-        })
+        .get(
+          `https://insta-stay-server.vercel.app/room-bookings?email=${user.email}`,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => setBookings(res.data))
         .catch((error) => console.error(error));
     }
@@ -40,7 +43,7 @@ const RoomDetails = () => {
   // load review
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/all-reviews?id=${room._id}`)
+      .get(`https://insta-stay-server.vercel.app/all-reviews?id=${room._id}`)
       .then((res) => {
         setReview(res.data);
       });
@@ -96,10 +99,12 @@ const RoomDetails = () => {
       userEmail: user?.email,
     };
     axios
-      .post("http://localhost:3000/room/booking", bookingSummary)
+      .post("https://insta-stay-server.vercel.app/room/booking", bookingSummary)
       .then((data) => {
         axios
-          .patch(`http://localhost:3000/update-availability-false/${_id}`)
+          .patch(
+            `https://insta-stay-server.vercel.app/update-availability-false/${_id}`
+          )
           .then((res) => {
             if (data.data.insertedId) {
               setBookings((prevBookings) => [...prevBookings, bookingSummary]);
@@ -141,18 +146,20 @@ const RoomDetails = () => {
       roomId: room._id,
       image: user.photoURL,
     };
-    axios.post("http://localhost:3000/review", newReview).then((res) => {
-      if (res.status === 200) {
-        setReview((prevReviews) => [newReview, ...prevReviews]);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Thanks for your review",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
+    axios
+      .post("https://insta-stay-server.vercel.app/review", newReview)
+      .then((res) => {
+        if (res.status === 200) {
+          setReview((prevReviews) => [newReview, ...prevReviews]);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Thanks for your review",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   const handleOpenModal = () => {

@@ -32,12 +32,12 @@ const Router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Rooms></Rooms>,
-        loader: () => fetch("http://localhost:3000/"),
+        loader: () => fetch("https://insta-stay-server.vercel.app/"),
       },
       {
         path: "/room/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/room/${params.id}`),
+          fetch(`https://insta-stay-server.vercel.app/room/${params.id}`),
         element: <RoomDetails></RoomDetails>,
       },
       {

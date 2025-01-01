@@ -10,7 +10,7 @@ const ReviewsSlider = () => {
   const [latestReview, setLatestReview] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/latestReview")
+      .get("https://insta-stay-server.vercel.app/latestReview")
       .then((res) => setLatestReview(res.data));
   }, []);
   var settings = {

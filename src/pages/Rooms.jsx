@@ -7,11 +7,13 @@ import { Link, useLoaderData } from "react-router-dom";
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3000/").then((res) => setRooms(res.data));
+    axios
+      .get("https://insta-stay-server.vercel.app/")
+      .then((res) => setRooms(res.data));
   }, []);
   const handleShortByPrice = () => {
     axios
-      .get("http://localhost:3000/roomsSortByPrice")
+      .get("https://insta-stay-server.vercel.app/roomsSortByPrice")
       .then((res) => setRooms(res.data));
   };
   return (

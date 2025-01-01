@@ -1,6 +1,7 @@
 # **InstaStay - Client Side**
 
-**Live Site**: [https://www.zishanmh-instastay.netlify.app](https://www.zishanmh-instastay.netlify.app)
+**Live Site**: [https://zishanmh-instastay.netlify.app](https://zishanmh-instastay.netlify.app)
+**Server Side Code**: [https://github.com/zishanmeh/instastay-server](https://github.com/zishanmeh/instastay-server)
 
 ## **Overview**
 
